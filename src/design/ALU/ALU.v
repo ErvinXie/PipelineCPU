@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`include "../AMarco.v"
+`include "../Marco.v"
 
 
 module ALU(
@@ -7,7 +7,7 @@ module ALU(
     input rst,
     input[31:0] a,
     input[31:0] b,
-    input[`ALU_SEL_WIDTH-1:0] s,
+    input[3:0] s,
     output[31:0] c,
 
     output reg [31:0]  hi,
@@ -51,14 +51,13 @@ module ALU(
     wire[31:0] srl_out;
     assign srl_out = b >> a;
     
-    assign c =  (s==`direct1) ? a :
-                (s==`direct2) ? b :
+    assign c =  
                 (s==`add_op) ? add_out :
                 (s==`sub_op) ? sub_out :
                 (s==`and_op) ? and_out :
                 (s==`or_op) ? or_out :
                 (s==`xor_op) ? xor_out :
-                (s==`sll_op) ? sll_out :
+                (s==`sl_op) ? sll_out :
                 (s==`srl_op) ? srl_out :
                 8'b0;
 
