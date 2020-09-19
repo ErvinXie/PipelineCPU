@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "../Marco.v"
+`include "Marco.v"
 
 module Imem(input clk,
             input rst,
