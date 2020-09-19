@@ -30,7 +30,7 @@ module FullAdder(input[31:0] a,
     wire[8:0] c;
     assign c[0] = cin;
     assign cout = c[8];
-
+    
     genvar i;
     generate 
         for (i=0;i<8;i=i+1)

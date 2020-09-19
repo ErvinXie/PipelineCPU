@@ -1,3 +1,4 @@
+`include "ASettings.v"
 
 //alu sel
 `define ALU_SEL_WIDTH 5
@@ -54,11 +55,3 @@
 `define br_beq 1
 `define br_j 2
 
-//imem
-
-`define IMEM_ADDR_WIDTH 8
-`define IMEM_SIZE 256
-
-
-`define DMEM_ADDR_WIDTH 8
-`define DMEM_SIZE 256
