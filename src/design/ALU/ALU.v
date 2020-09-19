@@ -7,7 +7,7 @@ module ALU(
     input rst,
     input[31:0] a,
     input[31:0] b,
-    input[3:0] s,
+    input[`ALU_SELECTION_WIDTH-1:0] s,
     output[31:0] c,
 
     output reg [31:0]  hi,
