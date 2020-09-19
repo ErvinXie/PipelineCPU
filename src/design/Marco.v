@@ -79,7 +79,7 @@
 `define nor_op 9
 `define lt_op 10
 `define ltu_op 11
-`define sl_op 12
+`define sll_op 12
 `define srl_op 13
 `define sra_op 14
 
