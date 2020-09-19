@@ -50,6 +50,15 @@ module ALU(
 
     wire[31:0] srl_out;
     assign srl_out = b >> a;
+
+    wire[31:0] sra_out;
+    assign sra_out = b >>>a;
+
+    wire[31:0] nor_out;
+    assign nor_out = ~ (a | b);
+
+    wire[31:0] lt_out;
+    assign lt_out = a < b ? 32'b1 : 32'b0;
     
     assign c =  
                 (s==`add_op) ? add_out :
@@ -57,8 +66,12 @@ module ALU(
                 (s==`and_op) ? and_out :
                 (s==`or_op) ? or_out :
                 (s==`xor_op) ? xor_out :
-                (s==`sl_op) ? sll_out :
+                (s==`sll_op) ? sll_out :
                 (s==`srl_op) ? srl_out :
+                (s==`sra_op) ? sra_out :
+                (s==`nor_op) ? nor_out :
+                (s==`lt_op) ? lt_out :
+                (s==`ltu_op) ? lt_out :
                 8'b0;
 
     wire[31:0] divu_out_hi,divu_out_lo;
