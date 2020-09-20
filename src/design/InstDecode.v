@@ -9,6 +9,7 @@ module InstDecode(
     assign sa = inst[10:6];
     assign rs = inst[25:21];
     assign base = inst [25:21];
+    assign rt = inst[20:16];
     assign rd = inst[15:11];
 
     wire [5:0] opcode,func;
