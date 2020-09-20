@@ -17,7 +17,7 @@ module ALU(
 
     wire add_cout;
     wire[31:0] add_out;
-    full_adder u_full_adder(
+    FullAdder u_full_adder(
         .a(a),
         .b(b),
         .cin(0),
@@ -27,7 +27,7 @@ module ALU(
 
     wire sub_cout;
     wire[31:0] sub_out;
-    full_adder u_full_adder_sub(
+    FullAdder u_full_adder_sub(
         .a(a),
         .b(~b+1),
         .cin(0),
@@ -74,21 +74,8 @@ module ALU(
                 (s==`ltu_op) ? lt_out :
                 8'b0;
 
-    wire[31:0] divu_out_hi,divu_out_lo;
-    divu u_divu(
-        .a(a),
-        .b(b),
-        .quotient(divu_out_lo),
-        .remainder(divu_out_hi)
-    );
     
 
-    always@(posedge clk) begin
-        if(s==`div_op)begin
-            hi<= divu_out_hi;
-            lo<=divu_out_lo;
-        end
-    end
 
 
 endmodule
