@@ -66,7 +66,7 @@ module ALU(
                 (s==`and_op) ? and_out :
                 (s==`or_op) ? or_out :
                 (s==`xor_op) ? xor_out :
-                (s==`sll_op) ? sll_out :
+                (s==`sl_op) ? sll_out :
                 (s==`srl_op) ? srl_out :
                 (s==`sra_op) ? sra_out :
                 (s==`nor_op) ? nor_out :
