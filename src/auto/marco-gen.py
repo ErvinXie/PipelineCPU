@@ -52,13 +52,13 @@ with open('D:/PipelineCPU/src/design/Marco.v','w+') as f:
     f.write('`define off 0\n')
     f.write('`define on 1\n')
     f.write('`define x 0\n')
-    for i in range(3,tt.ncols):
+    for i in range(4,tt.ncols):
         control_line(i,f)
 
 print(width)
 with open('D:/PipelineCPU/src/design/Ctrl.v','w+') as f:
     f.write('`include "Marco.v"\n')
-    f.write('module Ctrl(\ninput clk,\ninput rst,\ninput[5:0] opcode,\ninput[5:0] func')
+    f.write('module Ctrl(\ninput clk,\ninput rst,\ninput[5:0] opcode,\ninput[5:0] func,\ninput[4:0] rt')
     for cname in width:
         f.write(f',\noutput[{width[cname][0]-1}:0] {cname}')
     f.write(');\n\n\n')
@@ -67,13 +67,23 @@ with open('D:/PipelineCPU/src/design/Ctrl.v','w+') as f:
     f.write(f'    assign inst_type = \n')
     opc={}
     func={}
+    regimm = {}
     for i in range(1,tt.nrows):
         if tt.cell_value(i,1)=='000000':
             func[tt.cell_value(i,2)] = tt.cell_value(i,0)+'_inst'
+        elif tt.cell_value(i,1)=='000001':
+            regimm[tt.cell_value(i,3)] = tt.cell_value(i,0)+'_inst'
         else:
             opc[tt.cell_value(i,1)] = tt.cell_value(i,0)+'_inst'
     for op in opc:
         f.write(f'        (opcode==6\'b{op})?`{opc[op]}:\n')
+    
+    f.write('        (opcode==6\'b000001)?(\n')
+    for r in regimm:
+        f.write(f'            (rt==5\'b{r})?`{regimm[r]}:\n')
+    
+    f.write('            `reserved):\n')
+
     f.write('        (opcode==6\'b000000)?(\n')
     for fun in func:
         f.write(f'            (func==6\'b{fun})?`{func[fun]}:\n')

@@ -26,16 +26,21 @@ module RegFile(
 
     reg[31:0] regs[31:0];
 
-
-    assign r1_data = regs[r1_addr];
+//  Forwarding
     assign r1_data = (we_ex==1&&wa_ex==r1_addr)?wd_ex:
                      (we_me==1&&wa_me==r1_addr)?wd_me:
                      (we_wb==1&&wa_wb==r1_addr)?wd_wb:
                      regs[r1_addr];
 
+    assign r2_data = (we_ex==1&&wa_ex==r2_addr)?wd_ex:
+                     (we_me==1&&wa_me==r2_addr)?wd_me:
+                     (we_wb==1&&wa_wb==r2_addr)?wd_wb:
+                     regs[r2_addr];
+    assign r_ra = (we_ex==1&&wa_ex==31)?wd_ex:
+                     (we_me==1&&wa_me==31)?wd_me:
+                     (we_wb==1&&wa_wb==31)?wd_wb:
+                     regs[r1_addr];
 
-    assign r2_data = regs[r2_addr];
-    assign r_ra = regs[31];
 
     integer i = 0;
     always @(posedge clk or negedge rst) begin

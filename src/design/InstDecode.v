@@ -44,6 +44,7 @@ module InstDecode(
         rst,
         opcode,
         func,
+        rt,
         cb,
         alu1,
         alu2,

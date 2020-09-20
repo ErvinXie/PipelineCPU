@@ -4,7 +4,8 @@ input clk,
 input rst,
 input[5:0] opcode,
 input[5:0] func,
-output[2:0] cb,
+input[4:0] rt,
+output[3:0] cb,
 output[1:0] alu1,
 output[0:0] alu2,
 output[3:0] alusel,
@@ -19,7 +20,6 @@ output[0:0] regwe);
     assign inst_type = 
         (opcode==6'b001000)?`addi_inst:
         (opcode==6'b001001)?`addiu_inst:
-        (opcode==6'b011100)?`mul_inst:
         (opcode==6'b001100)?`andi_inst:
         (opcode==6'b001101)?`ori_inst:
         (opcode==6'b001110)?`xori_inst:
@@ -38,15 +38,15 @@ output[0:0] regwe);
         (opcode==6'b000101)?`bne_inst:
         (opcode==6'b000110)?`blez_inst:
         (opcode==6'b000111)?`bgtz_inst:
+        (opcode==6'b000001)?(
+            (rt==5'b00000)?`bltz_inst:
+            (rt==5'b00001)?`bgez_inst:
+            `reserved):
         (opcode==6'b000000)?(
             (func==6'b100000)?`add_inst:
             (func==6'b100001)?`addu_inst:
             (func==6'b100010)?`sub_inst:
             (func==6'b100011)?`subu_inst:
-            (func==6'b011000)?`mult_inst:
-            (func==6'b011001)?`multu_inst:
-            (func==6'b011010)?`div_inst:
-            (func==6'b011011)?`divu_inst:
             (func==6'b100100)?`and_inst:
             (func==6'b100101)?`or_inst:
             (func==6'b100110)?`xor_inst:
@@ -71,11 +71,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`none:
         (inst_type==`sub_inst)?`none:
         (inst_type==`subu_inst)?`none:
-        (inst_type==`mul_inst)?`none:
-        (inst_type==`mult_inst)?`none:
-        (inst_type==`multu_inst)?`none:
-        (inst_type==`div_inst)?`none:
-        (inst_type==`divu_inst)?`none:
         (inst_type==`and_inst)?`none:
         (inst_type==`andi_inst)?`none:
         (inst_type==`or_inst)?`none:
@@ -108,6 +103,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`bne_br:
         (inst_type==`blez_inst)?`blez_br:
         (inst_type==`bgtz_inst)?`bgtz_br:
+        (inst_type==`bltz_inst)?`bltz_br:
+        (inst_type==`bgez_inst)?`bgez_br:
         0;
 
         assign alu1 = 
@@ -117,11 +114,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`rd1:
         (inst_type==`sub_inst)?`rd1:
         (inst_type==`subu_inst)?`rd1:
-        (inst_type==`mul_inst)?`rd1:
-        (inst_type==`mult_inst)?`rd1:
-        (inst_type==`multu_inst)?`rd1:
-        (inst_type==`div_inst)?`rd1:
-        (inst_type==`divu_inst)?`rd1:
         (inst_type==`and_inst)?`rd1:
         (inst_type==`andi_inst)?`rd1:
         (inst_type==`or_inst)?`rd1:
@@ -154,6 +146,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
         (inst_type==`bgtz_inst)?`x:
+        (inst_type==`bltz_inst)?`x:
+        (inst_type==`bgez_inst)?`x:
         0;
 
         assign alu2 = 
@@ -163,11 +157,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`imm:
         (inst_type==`sub_inst)?`rd2:
         (inst_type==`subu_inst)?`rd2:
-        (inst_type==`mul_inst)?`rd2:
-        (inst_type==`mult_inst)?`rd2:
-        (inst_type==`multu_inst)?`rd2:
-        (inst_type==`div_inst)?`rd2:
-        (inst_type==`divu_inst)?`rd2:
         (inst_type==`and_inst)?`rd2:
         (inst_type==`andi_inst)?`imm:
         (inst_type==`or_inst)?`rd2:
@@ -200,6 +189,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
         (inst_type==`bgtz_inst)?`x:
+        (inst_type==`bltz_inst)?`x:
+        (inst_type==`bgez_inst)?`x:
         0;
 
         assign alusel = 
@@ -209,11 +200,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`add_op:
         (inst_type==`sub_inst)?`sub_op:
         (inst_type==`subu_inst)?`sub_op:
-        (inst_type==`mul_inst)?`mul_op:
-        (inst_type==`mult_inst)?`mul_op:
-        (inst_type==`multu_inst)?`mulu_op:
-        (inst_type==`div_inst)?`div_op:
-        (inst_type==`divu_inst)?`divu_op:
         (inst_type==`and_inst)?`and_op:
         (inst_type==`andi_inst)?`and_op:
         (inst_type==`or_inst)?`or_op:
@@ -246,6 +232,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
         (inst_type==`bgtz_inst)?`x:
+        (inst_type==`bltz_inst)?`x:
+        (inst_type==`bgez_inst)?`x:
         0;
 
         assign dmemwe = 
@@ -255,11 +243,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`off:
         (inst_type==`sub_inst)?`off:
         (inst_type==`subu_inst)?`off:
-        (inst_type==`mul_inst)?`off:
-        (inst_type==`mult_inst)?`off:
-        (inst_type==`multu_inst)?`off:
-        (inst_type==`div_inst)?`off:
-        (inst_type==`divu_inst)?`off:
         (inst_type==`and_inst)?`off:
         (inst_type==`andi_inst)?`off:
         (inst_type==`or_inst)?`off:
@@ -292,6 +275,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`off:
         (inst_type==`blez_inst)?`off:
         (inst_type==`bgtz_inst)?`off:
+        (inst_type==`bltz_inst)?`off:
+        (inst_type==`bgez_inst)?`off:
         0;
 
         assign memlen = 
@@ -301,11 +286,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`x:
         (inst_type==`sub_inst)?`x:
         (inst_type==`subu_inst)?`x:
-        (inst_type==`mul_inst)?`x:
-        (inst_type==`mult_inst)?`x:
-        (inst_type==`multu_inst)?`x:
-        (inst_type==`div_inst)?`x:
-        (inst_type==`divu_inst)?`x:
         (inst_type==`and_inst)?`x:
         (inst_type==`andi_inst)?`x:
         (inst_type==`or_inst)?`x:
@@ -338,6 +318,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
         (inst_type==`bgtz_inst)?`x:
+        (inst_type==`bltz_inst)?`x:
+        (inst_type==`bgez_inst)?`x:
         0;
 
         assign regwa = 
@@ -347,11 +329,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`rt:
         (inst_type==`sub_inst)?`rd:
         (inst_type==`subu_inst)?`rd:
-        (inst_type==`mul_inst)?`rd:
-        (inst_type==`mult_inst)?`x:
-        (inst_type==`multu_inst)?`x:
-        (inst_type==`div_inst)?`x:
-        (inst_type==`divu_inst)?`x:
         (inst_type==`and_inst)?`rd:
         (inst_type==`andi_inst)?`rt:
         (inst_type==`or_inst)?`rd:
@@ -384,6 +361,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
         (inst_type==`bgtz_inst)?`x:
+        (inst_type==`bltz_inst)?`x:
+        (inst_type==`bgez_inst)?`x:
         0;
 
         assign regwd = 
@@ -393,11 +372,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`alu:
         (inst_type==`sub_inst)?`alu:
         (inst_type==`subu_inst)?`alu:
-        (inst_type==`mul_inst)?`alu:
-        (inst_type==`mult_inst)?`x:
-        (inst_type==`multu_inst)?`x:
-        (inst_type==`div_inst)?`x:
-        (inst_type==`divu_inst)?`x:
         (inst_type==`and_inst)?`alu:
         (inst_type==`andi_inst)?`alu:
         (inst_type==`or_inst)?`alu:
@@ -430,6 +404,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
         (inst_type==`bgtz_inst)?`x:
+        (inst_type==`bltz_inst)?`x:
+        (inst_type==`bgez_inst)?`x:
         0;
 
         assign regwe = 
@@ -439,11 +415,6 @@ output[0:0] regwe);
         (inst_type==`addiu_inst)?`on:
         (inst_type==`sub_inst)?`on:
         (inst_type==`subu_inst)?`on:
-        (inst_type==`mul_inst)?`on:
-        (inst_type==`mult_inst)?`off:
-        (inst_type==`multu_inst)?`off:
-        (inst_type==`div_inst)?`off:
-        (inst_type==`divu_inst)?`off:
         (inst_type==`and_inst)?`on:
         (inst_type==`andi_inst)?`on:
         (inst_type==`or_inst)?`on:
@@ -476,6 +447,8 @@ output[0:0] regwe);
         (inst_type==`bne_inst)?`off:
         (inst_type==`blez_inst)?`off:
         (inst_type==`bgtz_inst)?`off:
+        (inst_type==`bltz_inst)?`off:
+        (inst_type==`bgez_inst)?`off:
         0;
 
 endmodule
