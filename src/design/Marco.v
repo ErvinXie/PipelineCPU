@@ -39,10 +39,12 @@
 `define mfhi_inst 35
 `define mflo_inst 36
 `define j_inst 37
-`define beq_inst 38
-`define bne_inst 39
-`define blez_inst 40
-`define bgtz_inst 41
+`define jal_inst 38
+`define jr_inst 39
+`define beq_inst 40
+`define bne_inst 41
+`define blez_inst 42
+`define bgtz_inst 43
 
 //general
 `define off 0
@@ -52,10 +54,12 @@
 //cb 
 `define none 0
 `define j_br 1
-`define beq_br 2
-`define bne_br 3
-`define blez_br 4
-`define bgtz_br 5
+`define jal_br 2
+`define jr_br 3
+`define beq_br 4
+`define bne_br 5
+`define blez_br 6
+`define bgtz_br 7
 
 //alu1 
 `define rd1 0

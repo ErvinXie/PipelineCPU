@@ -28,6 +28,68 @@ module InstDecode(
     assign instr_index = inst[25:0];
 
 
+    wire[2:0] cb;
+    wire[1:0] alu1;
+    wire[0:0] alu2;
+    wire[3:0] alusel;
+    wire[0:0] dmemwe;
+    wire[1:0] memlen;
+    wire[0:0] regwa;
+    wire[1:0] regwd;
+    wire[0:0] regwe;
+
+
+    Ctrl u_ctrl(
+        clk,
+        rst,
+        opcode,
+        func,
+        cb,
+        alu1,
+        alu2,
+        alusel,
+        dmemwe,
+        memlen,
+        regwa,
+        regwd,
+        regwe
+    );
+
+    wire[4:0] regwa_mux_o;
+    wire[31:0] rd1,rd2,wd,w_ra,r_ra;
+    mux2#(5) regwa_mux(
+        rd,
+        rt,
+        regwa,
+        regwa_mux_o
+    );
+
+    wire[31:0] regwd_mux_o;
+    mux4 regwd_mux(
+        alu,
+        memrd,
+        hi,
+        lo,
+        regwd,
+        regwd_mux_o
+    );
+
+    RegFile u_regfile(
+        clk,
+        rst,
+        regwe,
+        rs,
+        rt,
+        regwa_mux_o,
+        rd1,
+        rd2,
+        regwd_mux_o,
+        w_ra,
+        r_ra
+    );
+
+    
+
 
 
 endmodule

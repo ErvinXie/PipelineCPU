@@ -33,6 +33,7 @@ output[0:0] regwe);
         (opcode==6'b101001)?`sh_inst:
         (opcode==6'b001111)?`lui_inst:
         (opcode==6'b000010)?`j_inst:
+        (opcode==6'b000011)?`jal_inst:
         (opcode==6'b000100)?`beq_inst:
         (opcode==6'b000101)?`bne_inst:
         (opcode==6'b000110)?`blez_inst:
@@ -59,6 +60,7 @@ output[0:0] regwe);
             (func==6'b000110)?`srlv_inst:
             (func==6'b010000)?`mfhi_inst:
             (func==6'b010010)?`mflo_inst:
+            (func==6'b001000)?`jr_inst:
             `reserved
         ):`reserved;
 
@@ -100,6 +102,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`none:
         (inst_type==`mflo_inst)?`none:
         (inst_type==`j_inst)?`j_br:
+        (inst_type==`jal_inst)?`jal_br:
+        (inst_type==`jr_inst)?`jr_br:
         (inst_type==`beq_inst)?`beq_br:
         (inst_type==`bne_inst)?`bne_br:
         (inst_type==`blez_inst)?`blez_br:
@@ -144,6 +148,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`x:
         (inst_type==`mflo_inst)?`x:
         (inst_type==`j_inst)?`x:
+        (inst_type==`jal_inst)?`x:
+        (inst_type==`jr_inst)?`x:
         (inst_type==`beq_inst)?`x:
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
@@ -188,6 +194,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`x:
         (inst_type==`mflo_inst)?`x:
         (inst_type==`j_inst)?`x:
+        (inst_type==`jal_inst)?`x:
+        (inst_type==`jr_inst)?`x:
         (inst_type==`beq_inst)?`x:
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
@@ -232,6 +240,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`x:
         (inst_type==`mflo_inst)?`x:
         (inst_type==`j_inst)?`x:
+        (inst_type==`jal_inst)?`x:
+        (inst_type==`jr_inst)?`x:
         (inst_type==`beq_inst)?`x:
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
@@ -276,6 +286,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`off:
         (inst_type==`mflo_inst)?`off:
         (inst_type==`j_inst)?`off:
+        (inst_type==`jal_inst)?`off:
+        (inst_type==`jr_inst)?`off:
         (inst_type==`beq_inst)?`off:
         (inst_type==`bne_inst)?`off:
         (inst_type==`blez_inst)?`off:
@@ -320,6 +332,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`x:
         (inst_type==`mflo_inst)?`x:
         (inst_type==`j_inst)?`x:
+        (inst_type==`jal_inst)?`x:
+        (inst_type==`jr_inst)?`x:
         (inst_type==`beq_inst)?`x:
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
@@ -364,6 +378,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`rd:
         (inst_type==`mflo_inst)?`rd:
         (inst_type==`j_inst)?`x:
+        (inst_type==`jal_inst)?`x:
+        (inst_type==`jr_inst)?`x:
         (inst_type==`beq_inst)?`x:
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
@@ -408,6 +424,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`hi:
         (inst_type==`mflo_inst)?`lo:
         (inst_type==`j_inst)?`x:
+        (inst_type==`jal_inst)?`x:
+        (inst_type==`jr_inst)?`x:
         (inst_type==`beq_inst)?`x:
         (inst_type==`bne_inst)?`x:
         (inst_type==`blez_inst)?`x:
@@ -452,6 +470,8 @@ output[0:0] regwe);
         (inst_type==`mfhi_inst)?`on:
         (inst_type==`mflo_inst)?`on:
         (inst_type==`j_inst)?`off:
+        (inst_type==`jal_inst)?`on:
+        (inst_type==`jr_inst)?`off:
         (inst_type==`beq_inst)?`off:
         (inst_type==`bne_inst)?`off:
         (inst_type==`blez_inst)?`off:

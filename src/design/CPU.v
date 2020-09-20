@@ -23,6 +23,18 @@ module CPU(
 
     //ID
 
+    InstDecode u_instdecode(
+        clk,
+        rst,
+        inst_o,
+
+    );
+
+
+
+    
+
+
 
 
 
