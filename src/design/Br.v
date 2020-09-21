@@ -48,6 +48,16 @@ assign bgtz_out =
                 (RD1 > 32'b0) ? branch :
                 npc;
 
+wire [31:0] bltz_out;
+assign bltz_out = 
+                (RD1 < 32'b0) ? branch :
+                npc;
+
+wire [31:0] bgez_out;
+assign bgez_out = 
+                (RD1 >= 32'b0) ? branch :
+                npc;
+
 assign newPC = 
                 (CB == `none) ? npc :
                 (CB == `j_br) ? j_out :
@@ -55,6 +65,8 @@ assign newPC =
                 (CB == `bne_br) ? bne_out :
                 (CB == `blez_br) ? blez_out :
                 (CB == `bgtz_br) ? bgtz_out :
+                (CB == `bltz_br) ? bltz_out :
+                (CB == `bgez_br) ? bgez_out :
                 npc;
     
 endmodule
