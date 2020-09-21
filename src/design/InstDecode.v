@@ -3,7 +3,19 @@
 module InstDecode(
     input clk,
     input rst,
-    input[31:0] inst
+    input[31:0] inst,
+
+    output[1:0] regwe_o,
+    output[4:0] alusel_o,
+    output[2:0] memlen_o,
+    output[1:0] memwe_o,
+    output[32:0] imm_ext_o,
+    output[32:0] sa_ext_o,
+    output[32:0] rd1_o,
+    output[32:0] rd2_o,
+    output[5:0] rt_o,
+    output[5:0] rd_o
+
 );
     wire[4:0] sa,rs,rt,rd,base;
     assign sa = inst[10:6];
@@ -91,6 +103,15 @@ module InstDecode(
 
     
 
+    assign regwe_o = regwe;
+    assign alusel_o = alusel;
+    assign memlen_o = memlen;
+    assign memwe_o = dmemwe;
+    assign sa_ext_o = sa_ext;
+    assign rd1_o = rd1;
+    assign rd2_o = rd2;
+    assign rt_o = rt;
+    assign rd_o = rd;
 
 
 endmodule

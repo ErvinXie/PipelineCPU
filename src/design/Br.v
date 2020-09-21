@@ -6,7 +6,7 @@ module Br (
     input [15:0] offset,
     input [31:0] RD1, //rs
     input [31:0] RD2,
-    input [2:0] CB,
+    input [3:0] CB,
     output [31:0] newPC
 );
 

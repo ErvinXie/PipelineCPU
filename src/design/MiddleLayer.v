@@ -36,6 +36,10 @@ module ID_EX(
     output[2:0] memlen_o,
     input[1:0] memwe_i,
     output[1:0] memwe_o,
+    input[32:0] imm_ext_i,
+    output[32:0] imm_ext_o,
+    input[32:0] sa_ext_i,
+    output[32:0] sa_ext_o,
     input[32:0] rd1_i,
     output[32:0] rd1_o,
     input[32:0] rd2_i,
@@ -52,6 +56,8 @@ module ID_EX(
     reg[4:0] alusel;
     reg[2:0] memlen;
     reg[1:0] memwe;
+    reg[32:0] imm_ext;
+    reg[32:0] sa_ext;
     reg[32:0] rd1;
     reg[32:0] rd2;
     reg[5:0] rt;
@@ -63,6 +69,8 @@ module ID_EX(
             alusel <= alusel_i;
             memlen <= memlen_i;
             memwe <= memwe_i;
+            imm_ext <= imm_ext_i;
+            sa_ext <= sa_ext_i;
             rd1 <= rd1_i;
             rd2 <= rd2_i;
             rt <= rt_i;
@@ -73,6 +81,8 @@ module ID_EX(
     assign alusel_o = alusel & oe;
     assign memlen_o = memlen & oe;
     assign memwe_o = memwe & oe;
+    assign imm_ext_o = imm_ext & oe;
+    assign sa_ext_o = sa_ext & oe;
     assign rd1_o = rd1 & oe;
     assign rd2_o = rd2 & oe;
     assign rt_o = rt & oe;

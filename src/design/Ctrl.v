@@ -27,6 +27,7 @@ output[0:0] regwe);
         (opcode==6'b001011)?`sltiu_inst:
         (opcode==6'b010011)?`lw_inst:
         (opcode==6'b101011)?`sw_inst:
+        (opcode==6'b100100)?`lbu_inst:
         (opcode==6'b100000)?`lb_inst:
         (opcode==6'b101000)?`sb_inst:
         (opcode==6'b100001)?`lh_inst:
@@ -89,6 +90,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`none:
         (inst_type==`lw_inst)?`none:
         (inst_type==`sw_inst)?`none:
+        (inst_type==`lbu_inst)?`none:
         (inst_type==`lb_inst)?`none:
         (inst_type==`sb_inst)?`none:
         (inst_type==`lh_inst)?`none:
@@ -132,6 +134,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`rd1:
         (inst_type==`lw_inst)?`rd1:
         (inst_type==`sw_inst)?`rd1:
+        (inst_type==`lbu_inst)?`rd1:
         (inst_type==`lb_inst)?`rd1:
         (inst_type==`sb_inst)?`rd1:
         (inst_type==`lh_inst)?`rd1:
@@ -175,6 +178,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`rd2:
         (inst_type==`lw_inst)?`imm:
         (inst_type==`sw_inst)?`imm:
+        (inst_type==`lbu_inst)?`imm:
         (inst_type==`lb_inst)?`imm:
         (inst_type==`sb_inst)?`imm:
         (inst_type==`lh_inst)?`imm:
@@ -218,6 +222,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`srl_op:
         (inst_type==`lw_inst)?`add_op:
         (inst_type==`sw_inst)?`add_op:
+        (inst_type==`lbu_inst)?`add_op:
         (inst_type==`lb_inst)?`add_op:
         (inst_type==`sb_inst)?`add_op:
         (inst_type==`lh_inst)?`add_op:
@@ -261,6 +266,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`off:
         (inst_type==`lw_inst)?`off:
         (inst_type==`sw_inst)?`on:
+        (inst_type==`lbu_inst)?`off:
         (inst_type==`lb_inst)?`off:
         (inst_type==`sb_inst)?`on:
         (inst_type==`lh_inst)?`off:
@@ -304,6 +310,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`x:
         (inst_type==`lw_inst)?`word:
         (inst_type==`sw_inst)?`word:
+        (inst_type==`lbu_inst)?`byte:
         (inst_type==`lb_inst)?`byte:
         (inst_type==`sb_inst)?`byte:
         (inst_type==`lh_inst)?`half:
@@ -347,6 +354,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`rd:
         (inst_type==`lw_inst)?`rt:
         (inst_type==`sw_inst)?`x:
+        (inst_type==`lbu_inst)?`rt:
         (inst_type==`lb_inst)?`rt:
         (inst_type==`sb_inst)?`x:
         (inst_type==`lh_inst)?`rt:
@@ -390,6 +398,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`alu:
         (inst_type==`lw_inst)?`memrd:
         (inst_type==`sw_inst)?`x:
+        (inst_type==`lbu_inst)?`memrd:
         (inst_type==`lb_inst)?`memrd:
         (inst_type==`sb_inst)?`x:
         (inst_type==`lh_inst)?`memrd:
@@ -433,6 +442,7 @@ output[0:0] regwe);
         (inst_type==`srlv_inst)?`on:
         (inst_type==`lw_inst)?`on:
         (inst_type==`sw_inst)?`off:
+        (inst_type==`lbu_inst)?`on:
         (inst_type==`lb_inst)?`on:
         (inst_type==`sb_inst)?`off:
         (inst_type==`lh_inst)?`on:
