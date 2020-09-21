@@ -4,35 +4,35 @@ module Execute(
     input rst,
 
     
-    input[1:0] cregwa_i,
+    input[0:0] cregwa_i,
   
-    input[2:0] cregwd_i,
+    input[1:0] cregwd_i,
 
-    input[1:0] regwe_i,
+    input[0:0] regwe_i,
 
-    input[2:0] aluin1_i,
+    input[1:0] aluin1_i,
 
-    input[1:0] aluin2_i,
+    input[0:0] aluin2_i,
     
-    input[4:0] alusel_i,
+    input[3:0] alusel_i,
    
-    input[2:0] memlen_i,
+    input[1:0] memlen_i,
  
-    input[1:0] memwe_i,
+    input[0:0] memwe_i,
 
-    input[32:0] imm_ext_i,
+    input[31:0] imm_ext_i,
   
-    input[32:0] sa_ext_i,
+    input[31:0] sa_ext_i,
     
-    input[32:0] rd1_i,
+    input[31:0] rd1_i,
    
-    input[32:0] rd2_i,
+    input[31:0] rd2_i,
 
-    input[5:0] rt_i,
+    input[4:0] rt_i,
 
-    input[5:0] rd_i,
+    input[4:0] rd_i,
 
-    output[2:0] cwd_ex,
+    output[1:0] cwd_ex,
     output we_ex,
     
     output[4:0] wa_ex,

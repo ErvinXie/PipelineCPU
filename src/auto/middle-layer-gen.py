@@ -37,6 +37,12 @@ with open('D:\\PipelineCPU\\src\\design\\MiddleLayer.v','w+') as f:
                 f.write(f'            {var} <= {var}_i;\n')
         f.write('        end\n    end\n')
 
+        f.write('\n    always@(negedge rst)begin\n')
+        for var in tabledata:
+            if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
+                f.write(f'        {var} <= 0;\n')
+        f.write('    end\n')
+
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
                 f.write(f'    assign {var}_o = {var} & oe;\n')

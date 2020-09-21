@@ -52,7 +52,9 @@ module VisMem(
 
     assign we_me = regwe_i;
     assign wa_me = (cregwa_i==`rd)?rd_i:rt_i;
-    assign wd_me = (cregwd_i==`memrd)?memrd_o:0;
+    assign wd_me = (cregwd_i==`memrd)?memrd_o:
+                   (cregwd_i==`alu)?aluout_i:
+                   0;
 
 
     Dmem u_deme(

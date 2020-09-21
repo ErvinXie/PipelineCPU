@@ -19,6 +19,11 @@ module FI_ID(
             inst <= inst_i;
         end
     end
+
+    always@(negedge rst)begin
+        pc <= 0;
+        inst <= 0;
+    end
     assign pc_o = pc & oe;
     assign inst_o = inst & oe;
 
@@ -93,6 +98,23 @@ module ID_EX(
             rd <= rd_i;
         end
     end
+
+    always@(negedge rst)begin
+        cregwa <= 0;
+        cregwd <= 0;
+        regwe <= 0;
+        aluin1 <= 0;
+        aluin2 <= 0;
+        alusel <= 0;
+        memlen <= 0;
+        memwe <= 0;
+        imm_ext <= 0;
+        sa_ext <= 0;
+        rd1 <= 0;
+        rd2 <= 0;
+        rt <= 0;
+        rd <= 0;
+    end
     assign cregwa_o = cregwa & oe;
     assign cregwd_o = cregwd & oe;
     assign regwe_o = regwe & oe;
@@ -159,6 +181,18 @@ module EX_MEM(
             aluout <= aluout_i;
         end
     end
+
+    always@(negedge rst)begin
+        cregwa <= 0;
+        cregwd <= 0;
+        regwe <= 0;
+        memlen <= 0;
+        memwe <= 0;
+        rd2 <= 0;
+        rt <= 0;
+        rd <= 0;
+        aluout <= 0;
+    end
     assign cregwa_o = cregwa & oe;
     assign cregwd_o = cregwd & oe;
     assign regwe_o = regwe & oe;
@@ -211,6 +245,16 @@ module MEM_WB(
             aluout <= aluout_i;
             memrd <= memrd_i;
         end
+    end
+
+    always@(negedge rst)begin
+        cregwa <= 0;
+        cregwd <= 0;
+        regwe <= 0;
+        rt <= 0;
+        rd <= 0;
+        aluout <= 0;
+        memrd <= 0;
     end
     assign cregwa_o = cregwa & oe;
     assign cregwd_o = cregwd & oe;

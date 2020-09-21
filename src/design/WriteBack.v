@@ -21,14 +21,20 @@ module WriteBack(
     output[4:0] wa_wb,
     output[31:0] wd_wb,
 
+    output[0:0] we,
     output[4:0] wa,
     output[31:0] wd
     
 );
+
     assign we_wb = regwe_i;
     assign wa_wb = (cregwa_i==`rd)?rd_i:rt_i;
-    assign wd_wb = (cregwd_i==`memrd)?memrd_i:aluout_i;
+    assign wd_wb = (cregwd_i==`memrd)?memrd_i:
+                   (cregwd_i==`alu)?aluout_i:
+                   0;
 
+
+    assign we = regwe_i;
     mux2#(5) u_wamux(
         rd_i,
         rt_i,
@@ -44,6 +50,7 @@ module WriteBack(
         cregwd_i,
         wd
     );
+
 
 
 endmodule

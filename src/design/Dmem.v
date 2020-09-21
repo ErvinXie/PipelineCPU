@@ -27,7 +27,7 @@ module Dmem(input clk,
         end
     end
     initial begin
-         $readmemh("D:/ErvinCPU/test/dmem.txt",mem);
+         $readmemh("D:/PipelineCPU/test/dmem.txt",mem);
     end
     
     

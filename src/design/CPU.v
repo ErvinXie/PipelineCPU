@@ -6,22 +6,31 @@ module CPU(
 );
     // FI
     reg[31:0] pc;
+    reg pause;
+    wire pause_o;
+
+    always@(negedge rst)begin
+        pc<=0;
+        pause<=0;
+    end
+
     wire[31:0] inst;
     wire[31:0] inst_o,pc_o;
+    
     Imem u_imem(
         clk,
         rst,
         pc,
         inst
     );
-    wire pause;
+    
     FI_ID fiid(
         clk,
         rst,
         pause,
         pc,
-        inst,
         pc_o,
+        inst,
         inst_o
     );
     wire[31:0] newPC_ID_o;
@@ -32,12 +41,14 @@ module CPU(
             pc<=newPC_ID_o;
         else
             pc<=pc+4;
+        
+        pause<=pause_o;
     end
 
     //ID
 
     wire[1:0] cregwd_ex;
-    wire[4:0] ex_rt;
+   
 
     wire we_ex;
     wire[4:0] wa_ex;
@@ -49,6 +60,7 @@ module CPU(
     wire[4:0] wa_wb;
     wire[31:0] wd_wb;
 
+    wire[0:0] WB_regwe;
     wire[4:0] WB_regwa;
     wire[31:0] WB_regwd;
     
@@ -75,6 +87,7 @@ module CPU(
         inst_o,
         pc_o,
 
+        WB_regwe,
         WB_regwa,
         WB_regwd,
 
@@ -92,27 +105,42 @@ module CPU(
         wa_wb,
         wd_wb,
 
-        pause,
+        pause_o,
 
         newPC_ID_o,
+
         cb_o,
+
         cregwa_ID_o,
+
         cregwd_ID_o,
+
         regwe_ID_o,
+
         aluin1_ID_o,
+
         aluin2_ID_o,
+
         alusel_ID_o,
+
         memlen_ID_o,
+
         memwe_ID_o,
+
         imm_ext_ID_o,
+
         sa_ext_ID_o,
+
         rd1_ID_o,
+
         rd2_ID_o,
+
         rt_ID_o,
+
         rd_ID_o
+        
     );
 
-    wire[31:0] newPC_EX_i;
 
     wire[0:0] cregwa_EX_i;
     wire[1:0] cregwd_EX_i;
@@ -272,7 +300,7 @@ module CPU(
         rd_MEM_i,
 
         aluout_EX_o,
-        aluout_MEM_i,    
+        aluout_MEM_i 
     );
 
     wire[0:0] cregwa_MEM_o;
@@ -306,7 +334,7 @@ module CPU(
         rt_MEM_o,
         rd_MEM_o,
         aluout_MEM_o,
-        memrd_MEM_o,
+        memrd_MEM_o
 
     );
 
@@ -360,6 +388,7 @@ module CPU(
         wa_wb,
         wd_wb,
 
+        WB_regwe,
         WB_regwa,
         WB_regwd
 

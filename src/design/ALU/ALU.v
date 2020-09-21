@@ -8,10 +8,8 @@ module ALU(
     input[31:0] a,
     input[31:0] b,
     input[`ALU_SELECTION_WIDTH-1:0] s,
-    output[31:0] c,
+    output[31:0] c
 
-    output reg [31:0]  hi,
-    output reg [31:0]  lo
 );
     
 

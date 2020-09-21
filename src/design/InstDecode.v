@@ -6,6 +6,7 @@ module InstDecode(
     input[31:0] inst,
     input[31:0] pc,
 
+    input[0:0] WB_we,
     input[4:0] WB_wa,
     input[31:0] WB_wd,
 
@@ -73,6 +74,7 @@ module InstDecode(
     wire[31:0] imm_ext,sa_ext;
 
     assign imm_ext = {16'hffff & imm[15],imm};
+    assign imm_ext_o = imm_ext;
     assign sa_ext = {27'hfffffff & sa[4],sa};
 
     wire[25:0] instr_index;
@@ -80,8 +82,8 @@ module InstDecode(
 
 
     wire[3:0] cb;
-    wire[1:0] alu1;
-    wire[0:0] alu2;
+
+
     wire[3:0] alusel;
     wire[0:0] dmemwe;
     wire[1:0] memlen;
@@ -97,8 +99,8 @@ module InstDecode(
         func,
         rt,
         cb,
-        alu1,
-        alu2,
+        aluin1_o,
+        aluin2_o,
         alusel,
         dmemwe,
         memlen,
@@ -113,7 +115,7 @@ module InstDecode(
     RegFile u_regfile(
         clk,
         rst,
-        regwe,
+        WB_we,
         rs,
         rt,
         WB_wa,
