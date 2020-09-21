@@ -4,17 +4,54 @@ module InstDecode(
     input clk,
     input rst,
     input[31:0] inst,
+    input[31:0] pc,
 
-    output[1:0] regwe_o,
-    output[4:0] alusel_o,
-    output[2:0] memlen_o,
-    output[1:0] memwe_o,
-    output[32:0] imm_ext_o,
-    output[32:0] sa_ext_o,
-    output[32:0] rd1_o,
-    output[32:0] rd2_o,
-    output[5:0] rt_o,
-    output[5:0] rd_o
+    input[4:0] WB_wa,
+    input[31:0] WB_wd,
+
+    input[1:0] cregwd_ex,
+
+    input we_ex,
+    input[4:0] wa_ex,
+    input[31:0] wd_ex,   
+    input we_me,
+    input[4:0] wa_me,
+    input[31:0] wd_me,   
+    input we_wb,
+    input[4:0] wa_wb,
+    input[31:0] wd_wb,
+
+    output pause,
+
+    output[31:0] newPC_o,
+
+    output[0:0] cregwa_o,
+ 
+    output[1:0] cregwd_o,
+
+    output[0:0] regwe_o,
+ 
+    output[1:0] aluin1_o,
+
+    output[0:0] aluin2_o,
+
+    output[3:0] alusel_o,
+
+    output[1:0] memlen_o,
+ 
+    output[0:0] memwe_o,
+
+    output[31:0] imm_ext_o,
+
+    output[31:0] sa_ext_o,
+ 
+    output[31:0] rd1_o,
+ 
+    output[31:0] rd2_o,
+
+    output[4:0] rt_o,
+  
+    output[4:0] rd_o
 
 );
     wire[4:0] sa,rs,rt,rd,base;
@@ -68,24 +105,10 @@ module InstDecode(
         regwe
     );
 
-    wire[4:0] regwa_mux_o;
-    wire[31:0] rd1,rd2,wd,w_ra,r_ra;
-    mux2#(5) regwa_mux(
-        rd,
-        rt,
-        regwa,
-        regwa_mux_o
-    );
+ 
+    wire[31:0] rd1,rd2,w_ra;
+    
 
-    wire[31:0] regwd_mux_o;
-    mux4 regwd_mux(
-        alu,
-        memrd,
-        hi,
-        lo,
-        regwd,
-        regwd_mux_o
-    );
 
     RegFile u_regfile(
         clk,
@@ -93,17 +116,48 @@ module InstDecode(
         regwe,
         rs,
         rt,
-        regwa_mux_o,
+        WB_wa,
         rd1,
         rd2,
-        regwd_mux_o,
+        WB_wd,
         w_ra,
-        r_ra
+
+
+        cregwd_ex,
+
+        pause,
+
+        we_ex,
+        wa_ex,
+        wd_ex,
+
+        we_me,
+        wa_me,
+        wd_me,
+
+        we_wb,
+        wa_wb,
+        wd_wb
+
     );
 
-    
+    wire[31:0] newPC;
+    Br u_br(
+        pc,
+        instr_index,
+        offset,
+        rd1,
+        rd2,
+        cb,
+        newPC
+    );
 
+
+
+    assign newPC_o = newPC;
     assign regwe_o = regwe;
+    assign cregwa_o = regwa;
+    assign cregwd_o = regwd;
     assign alusel_o = alusel;
     assign memlen_o = memlen;
     assign memwe_o = dmemwe;

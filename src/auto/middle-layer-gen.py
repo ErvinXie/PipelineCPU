@@ -24,13 +24,13 @@ with open('D:\\PipelineCPU\\src\\design\\MiddleLayer.v','w+') as f:
         f.write(f'module {stage[i]}_{stage[i+1]}(\n    input clk,\n    input rst,\n    input pause')
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
-                f.write(f',\n    input[{tabledata[var]["width"]}:0] {var}_i')
-                f.write(f',\n    output[{tabledata[var]["width"]}:0] {var}_o')
+                f.write(f',\n    input[{tabledata[var]["width"]-1}:0] {var}_i')
+                f.write(f',\n    output[{tabledata[var]["width"]-1}:0] {var}_o')
         f.write('\n);\n\n')
         f.write('    wire[31:0] oe;\n    assign oe = ~{32{pause}};\n')
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
-                f.write(f'    reg[{tabledata[var]["width"]}:0] {var};\n')
+                f.write(f'    reg[{tabledata[var]["width"]-1}:0] {var};\n')
         f.write('\n    always@(posedge clk)begin\n        if(pause==0)begin\n')
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:

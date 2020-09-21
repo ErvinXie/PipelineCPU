@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "Marco.v"
 
 module RegFile(
     input clk,
@@ -10,8 +11,13 @@ module RegFile(
     output [31:0] r1_data,
     output [31:0] r2_data,
     input [31:0] w_data,
+
     input [31:0] w_ra,
-    output[31:0] r_ra,
+
+    input[1:0] cregwd_ex,
+
+
+    output pause,
 
     input we_ex,
     input[4:0] wa_ex,
@@ -22,9 +28,15 @@ module RegFile(
     input we_wb,
     input[4:0] wa_wb,
     input[31:0] wd_wb 
+
 );
 
     reg[31:0] regs[31:0];
+
+//  Pause
+    assign pause = (cregwd_ex==`memrd)&&(we_ex==1)&&(
+        r1_addr == wa_ex||r2_addr == wa_ex || 31 == wa_ex
+    );
 
 //  Forwarding
     assign r1_data = (we_ex==1&&wa_ex==r1_addr)?wd_ex:
@@ -36,11 +48,7 @@ module RegFile(
                      (we_me==1&&wa_me==r2_addr)?wd_me:
                      (we_wb==1&&wa_wb==r2_addr)?wd_wb:
                      regs[r2_addr];
-                     
-    assign r_ra =    (we_ex==1&&wa_ex==31)?wd_ex:
-                     (we_me==1&&wa_me==31)?wd_me:
-                     (we_wb==1&&wa_wb==31)?wd_wb:
-                     regs[31];
+
 
 
     integer i = 0;
