@@ -50,7 +50,7 @@ module ALU(
     assign srl_out = b >> a;
 
     wire[31:0] sra_out;
-    assign sra_out = b >>>a;
+    assign sra_out =  ({{32{b[31]}}} << (~a[4:0])) | ( b >> a[4:0] ) ;;
 
     wire[31:0] nor_out;
     assign nor_out = ~ (a | b);

@@ -40,7 +40,7 @@ module InstDecode(
 
     output[3:0] alusel_o,
 
-    output[1:0] memlen_o,
+    output[2:0] memlen_o,
  
     output[0:0] memwe_o,
 
@@ -73,9 +73,9 @@ module InstDecode(
     assign offset = imm;
     wire[31:0] imm_ext,sa_ext;
 
-    assign imm_ext = {16'hffff & imm[15],imm};
+    assign imm_ext = {16'hffff & {16{imm[15]}},imm};
     assign imm_ext_o = imm_ext;
-    assign sa_ext = {27'hfffffff & sa[4],sa};
+    assign sa_ext = {27'hfffffff & {27{sa[4]}},sa};
 
     wire[25:0] instr_index;
     assign instr_index = inst[25:0];
@@ -86,7 +86,7 @@ module InstDecode(
 
     wire[3:0] alusel;
     wire[0:0] dmemwe;
-    wire[1:0] memlen;
+    wire[2:0] memlen;
     wire[0:0] regwa;
     wire[1:0] regwd;
     wire[0:0] regwe;

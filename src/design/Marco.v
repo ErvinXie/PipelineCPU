@@ -88,9 +88,13 @@
 `define on 1
 
 //memlen 
-`define word 0
-`define byte 1
-`define half 2
+`define lw_me 0
+`define sw_me 1
+`define lbu_me 2
+`define lb_me 3
+`define sb_me 4
+`define lh_me 5
+`define sh_me 6
 
 //regwa 
 `define rd 0

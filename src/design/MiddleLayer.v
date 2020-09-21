@@ -24,8 +24,8 @@ module FI_ID(
         pc <= 0;
         inst <= 0;
     end
-    assign pc_o = pc & oe;
-    assign inst_o = inst & oe;
+    assign pc_o = pc;
+    assign inst_o = inst;
 
 endmodule
 
@@ -45,8 +45,8 @@ module ID_EX(
     output[0:0] aluin2_o,
     input[3:0] alusel_i,
     output[3:0] alusel_o,
-    input[1:0] memlen_i,
-    output[1:0] memlen_o,
+    input[2:0] memlen_i,
+    output[2:0] memlen_o,
     input[0:0] memwe_i,
     output[0:0] memwe_o,
     input[31:0] imm_ext_i,
@@ -71,7 +71,7 @@ module ID_EX(
     reg[1:0] aluin1;
     reg[0:0] aluin2;
     reg[3:0] alusel;
-    reg[1:0] memlen;
+    reg[2:0] memlen;
     reg[0:0] memwe;
     reg[31:0] imm_ext;
     reg[31:0] sa_ext;
@@ -142,8 +142,8 @@ module EX_MEM(
     output[1:0] cregwd_o,
     input[0:0] regwe_i,
     output[0:0] regwe_o,
-    input[1:0] memlen_i,
-    output[1:0] memlen_o,
+    input[2:0] memlen_i,
+    output[2:0] memlen_o,
     input[0:0] memwe_i,
     output[0:0] memwe_o,
     input[31:0] rd2_i,
@@ -161,7 +161,7 @@ module EX_MEM(
     reg[0:0] cregwa;
     reg[1:0] cregwd;
     reg[0:0] regwe;
-    reg[1:0] memlen;
+    reg[2:0] memlen;
     reg[0:0] memwe;
     reg[31:0] rd2;
     reg[4:0] rt;
@@ -193,15 +193,15 @@ module EX_MEM(
         rd <= 0;
         aluout <= 0;
     end
-    assign cregwa_o = cregwa & oe;
-    assign cregwd_o = cregwd & oe;
-    assign regwe_o = regwe & oe;
-    assign memlen_o = memlen & oe;
-    assign memwe_o = memwe & oe;
-    assign rd2_o = rd2 & oe;
-    assign rt_o = rt & oe;
-    assign rd_o = rd & oe;
-    assign aluout_o = aluout & oe;
+    assign cregwa_o = cregwa;
+    assign cregwd_o = cregwd;
+    assign regwe_o = regwe;
+    assign memlen_o = memlen;
+    assign memwe_o = memwe;
+    assign rd2_o = rd2;
+    assign rt_o = rt;
+    assign rd_o = rd;
+    assign aluout_o = aluout;
 
 endmodule
 
@@ -256,13 +256,13 @@ module MEM_WB(
         aluout <= 0;
         memrd <= 0;
     end
-    assign cregwa_o = cregwa & oe;
-    assign cregwd_o = cregwd & oe;
-    assign regwe_o = regwe & oe;
-    assign rt_o = rt & oe;
-    assign rd_o = rd & oe;
-    assign aluout_o = aluout & oe;
-    assign memrd_o = memrd & oe;
+    assign cregwa_o = cregwa;
+    assign cregwd_o = cregwd;
+    assign regwe_o = regwe;
+    assign rt_o = rt;
+    assign rd_o = rd;
+    assign aluout_o = aluout;
+    assign memrd_o = memrd;
 
 endmodule
 

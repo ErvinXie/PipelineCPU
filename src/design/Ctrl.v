@@ -10,7 +10,7 @@ output[1:0] alu1,
 output[0:0] alu2,
 output[3:0] alusel,
 output[0:0] dmemwe,
-output[1:0] memlen,
+output[2:0] memlen,
 output[0:0] regwa,
 output[1:0] regwd,
 output[0:0] regwe);
@@ -25,7 +25,7 @@ output[0:0] regwe);
         (opcode==6'b001110)?`xori_inst:
         (opcode==6'b001010)?`slti_inst:
         (opcode==6'b001011)?`sltiu_inst:
-        (opcode==6'b010011)?`lw_inst:
+        (opcode==6'b100011)?`lw_inst:
         (opcode==6'b101011)?`sw_inst:
         (opcode==6'b100100)?`lbu_inst:
         (opcode==6'b100000)?`lb_inst:
@@ -308,13 +308,13 @@ output[0:0] regwe);
         (inst_type==`sra_inst)?`x:
         (inst_type==`sllv_inst)?`x:
         (inst_type==`srlv_inst)?`x:
-        (inst_type==`lw_inst)?`word:
-        (inst_type==`sw_inst)?`word:
-        (inst_type==`lbu_inst)?`byte:
-        (inst_type==`lb_inst)?`byte:
-        (inst_type==`sb_inst)?`byte:
-        (inst_type==`lh_inst)?`half:
-        (inst_type==`sh_inst)?`half:
+        (inst_type==`lw_inst)?`lw_me:
+        (inst_type==`sw_inst)?`sw_me:
+        (inst_type==`lbu_inst)?`lbu_me:
+        (inst_type==`lb_inst)?`lb_me:
+        (inst_type==`sb_inst)?`sb_me:
+        (inst_type==`lh_inst)?`lh_me:
+        (inst_type==`sh_inst)?`sh_me:
         (inst_type==`lui_inst)?`x:
         (inst_type==`mfhi_inst)?`x:
         (inst_type==`mflo_inst)?`x:

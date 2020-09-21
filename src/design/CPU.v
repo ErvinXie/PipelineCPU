@@ -6,12 +6,11 @@ module CPU(
 );
     // FI
     reg[31:0] pc;
-    reg pause;
-    wire pause_o;
+    wire pause;
+    
 
     always@(negedge rst)begin
         pc<=0;
-        pause<=0;
     end
 
     wire[31:0] inst;
@@ -41,8 +40,6 @@ module CPU(
             pc<=newPC_ID_o;
         else
             pc<=pc+4;
-        
-        pause<=pause_o;
     end
 
     //ID
@@ -72,7 +69,7 @@ module CPU(
     wire[1:0] aluin1_ID_o;
     wire[0:0] aluin2_ID_o;
     wire[3:0] alusel_ID_o;
-    wire[1:0] memlen_ID_o;
+    wire[2:0] memlen_ID_o;
     wire[0:0] memwe_ID_o;
     wire[31:0] imm_ext_ID_o;
     wire[31:0] sa_ext_ID_o;
@@ -105,7 +102,7 @@ module CPU(
         wa_wb,
         wd_wb,
 
-        pause_o,
+        pause,
 
         newPC_ID_o,
 
@@ -148,7 +145,7 @@ module CPU(
     wire[1:0] aluin1_EX_i;
     wire[0:0] aluin2_EX_i;
     wire[3:0] alusel_EX_i;
-    wire[1:0] memlen_EX_i;
+    wire[2:0] memlen_EX_i;
     wire[0:0] memwe_EX_i;
     wire[31:0] imm_ext_EX_i;
     wire[31:0] sa_ext_EX_i;
@@ -210,7 +207,7 @@ module CPU(
     wire[0:0] cregwa_EX_o;
     wire[1:0] cregwd_EX_o;
     wire[0:0] regwe_EX_o;
-    wire[1:0] memlen_EX_o;
+    wire[2:0] memlen_EX_o;
     wire[0:0] memwe_EX_o;
     wire[31:0] rd2_EX_o;
     wire[4:0] rt_EX_o;
@@ -259,7 +256,7 @@ module CPU(
     
     wire[0:0] regwe_MEM_i;
     
-    wire[1:0] memlen_MEM_i;
+    wire[2:0] memlen_MEM_i;
     
     wire[0:0] memwe_MEM_i;
     

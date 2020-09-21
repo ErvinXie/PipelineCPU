@@ -16,7 +16,7 @@ module Execute(
     
     input[3:0] alusel_i,
    
-    input[1:0] memlen_i,
+    input[2:0] memlen_i,
  
     input[0:0] memwe_i,
 
@@ -45,7 +45,7 @@ module Execute(
     
     output[0:0] regwe_o,
     
-    output[1:0] memlen_o,
+    output[2:0] memlen_o,
     
     output[0:0] memwe_o,
     

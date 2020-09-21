@@ -42,10 +42,13 @@ with open('D:\\PipelineCPU\\src\\design\\MiddleLayer.v','w+') as f:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
                 f.write(f'        {var} <= 0;\n')
         f.write('    end\n')
-
+        
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
-                f.write(f'    assign {var}_o = {var} & oe;\n')
+                if stage[i]=='ID':
+                    f.write(f'    assign {var}_o = {var} & oe;\n')
+                else:
+                    f.write(f'    assign {var}_o = {var};\n')
 
         f.write('\nendmodule\n\n')
 
