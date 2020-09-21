@@ -1,5 +1,5 @@
 `include "Marco.v"
-module EX(
+module Execute(
     input clk,
     input rst,
 

@@ -11,7 +11,7 @@ module Br (
 );
 
 wire [31:0] npc;
-assign npc = pc + 4;
+assign npc = pc + 8;
 
 wire [31:0] j_out;
 assign j_out = {

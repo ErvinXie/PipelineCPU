@@ -25,6 +25,8 @@ module InstDecode(
 
     output[31:0] newPC_o,
 
+    output[3:0] cb_o,
+
     output[0:0] cregwa_o,
  
     output[1:0] cregwd_o,
@@ -77,7 +79,7 @@ module InstDecode(
     assign instr_index = inst[25:0];
 
 
-    wire[2:0] cb;
+    wire[3:0] cb;
     wire[1:0] alu1;
     wire[0:0] alu2;
     wire[3:0] alusel;
@@ -106,10 +108,8 @@ module InstDecode(
     );
 
  
-    wire[31:0] rd1,rd2,w_ra;
+    wire[31:0] rd1,rd2;
     
-
-
     RegFile u_regfile(
         clk,
         rst,
@@ -120,8 +120,6 @@ module InstDecode(
         rd1,
         rd2,
         WB_wd,
-        w_ra,
-
 
         cregwd_ex,
 
@@ -155,6 +153,7 @@ module InstDecode(
 
 
     assign newPC_o = newPC;
+    assign cb_o = cb;
     assign regwe_o = regwe;
     assign cregwa_o = regwa;
     assign cregwd_o = regwd;

@@ -1,3 +1,5 @@
+`include"Marco.v"
+
 module CPU(
     input clk,
     input rst
@@ -22,6 +24,15 @@ module CPU(
         pc_o,
         inst_o
     );
+    wire[31:0] newPC_ID_o;
+    wire[3:0] cb_o;
+
+    always@(posedge clk)begin
+        if(cb_o!=`none)
+            pc<=newPC_ID_o;
+        else
+            pc<=pc+4;
+    end
 
     //ID
 
@@ -42,7 +53,7 @@ module CPU(
     wire[31:0] WB_regwd;
     
 
-    wire[31:0] newPC_ID_o;
+  
     wire[0:0] cregwa_ID_o;
     wire[1:0] cregwd_ID_o;
     wire[0:0] regwe_ID_o;
@@ -64,6 +75,9 @@ module CPU(
         inst_o,
         pc_o,
 
+        WB_regwa,
+        WB_regwd,
+
         cregwd_ex,
 
         we_ex,
@@ -81,6 +95,7 @@ module CPU(
         pause,
 
         newPC_ID_o,
+        cb_o,
         cregwa_ID_o,
         cregwd_ID_o,
         regwe_ID_o,
