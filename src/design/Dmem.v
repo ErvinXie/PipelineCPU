@@ -37,9 +37,9 @@ module Dmem(input clk,
             end
         end
     end
-    initial begin
-         $readmemh("D:/PipelineCPU/test/dmem.txt",mem);
-    end
+    // initial begin
+        //  $readmemh("D:/PipelineCPU/test/dmem.txt",mem);
+    // end
     
     
 endmodule
