@@ -13,7 +13,7 @@ module Imem(input clk,
     assign idata = mem[(addr>>2)];
     
     initial begin
-        $readmemh("D:/PipelineCPU/test/test-imem.txt",mem);
+        $readmemh("D:/PipelineCPU/test/imem.txt",mem);
     end
     
 endmodule

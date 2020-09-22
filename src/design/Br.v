@@ -21,10 +21,9 @@ assign j_out = {
 };
 
 wire [31:0] branch;
-wire [31:0] extend_offset;
+wire [31:0] target_offset;
 assign target_offset = {
-    {14{offset[15]}},
-    {offset, 2'b00}
+    {14{offset[15]}},offset, 2'b00
 };
 assign branch = pc + target_offset;
 

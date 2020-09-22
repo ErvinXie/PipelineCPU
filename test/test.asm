@@ -10,4 +10,16 @@ main:
     sb $t0,8($t1)
     li $t3,3
     lw $t2,($t1)
-    add $t0,$t3,$t2
+    li $t0,1
+    li $t1,10
+    li $t2,0
+loop:
+    add $t0,$t0,$t0
+    addi $t2,$t2,1
+    beq $t1,$t2,exit
+    nop
+    j loop
+    nop
+exit:
+    sub $t1,$t2,$t0
+    
