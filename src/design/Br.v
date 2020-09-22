@@ -8,7 +8,7 @@ module Br (
     input [31:0] RD2,
     input [3:0] CB,
     output [31:0] newPC,
-    output [4:0] ra
+    output [31:0] ra
 );
 
 wire [31:0] npc;
@@ -77,9 +77,13 @@ assign newPC =
                 (CB == `jal_br) ? jal_out :
                 (CB == `jr_br) ? jr_out :
                 npc;
-    
+
+wire[31:0] jal_pc;
+assign jal_pc = pc + 8;
+
+
 assign ra = 
-            (CB == `jal_br) ? 5'd31 :
-            5'b0;
+            (CB == `jal_br) ? jal_pc :
+            32'b0;
 
 endmodule
