@@ -8,6 +8,7 @@ module Br (
     input [31:0] RD2,
     input [3:0] CB,
     output [31:0] newPC,
+    output ra_we,
     output [31:0] ra
 );
 
@@ -80,6 +81,7 @@ assign newPC =
 
 wire[31:0] jal_pc;
 assign jal_pc = pc + 8;
+assign ra_we = CB==`jal_br;
 
 
 assign ra = 

@@ -8,10 +8,11 @@ module RegFile(
     input[4:0] r1_addr,
     input[4:0] r2_addr,
     input[4:0] w_addr,
+
     output [31:0] r1_data,
     output [31:0] r2_data,
-    input [31:0] w_data,
 
+    input [31:0] w_data,
     input[1:0] cregwd_ex,
 
     output pause,
@@ -24,7 +25,10 @@ module RegFile(
     input[31:0] wd_me,   
     input we_wb,
     input[4:0] wa_wb,
-    input[31:0] wd_wb 
+    input[31:0] wd_wb,
+
+    input ra_we,
+    input[31:0] br_ra_w
 
 );
 
@@ -56,9 +60,11 @@ module RegFile(
         end
         // for register $0
         else if (we) begin
-            if (w_addr != 4'b0)begin
+            if (w_addr != 4'b0&&w_addr!=4'd31)begin
                 regs[w_addr] <= w_data;
             end
+            if(ra_we)
+                regs[31]<=br_ra_w;
         end
     end
 endmodule

@@ -111,7 +111,9 @@ module InstDecode(
 
  
     wire[31:0] rd1,rd2;
-    
+    wire ra_we;
+    wire[31:0] br_ra_w;
+
     RegFile u_regfile(
         clk,
         rst,
@@ -137,7 +139,10 @@ module InstDecode(
 
         we_wb,
         wa_wb,
-        wd_wb
+        wd_wb,
+
+        ra_we,
+        br_ra_w
 
     );
 
@@ -149,7 +154,9 @@ module InstDecode(
         rd1,
         rd2,
         cb,
-        newPC
+        newPC,
+        ra_we,
+        br_ra_w
     );
 
 
