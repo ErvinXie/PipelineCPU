@@ -7,7 +7,8 @@ module Br (
     input [31:0] RD1, //rs
     input [31:0] RD2,
     input [3:0] CB,
-    output [31:0] newPC
+    output [31:0] newPC,
+    output [4:0] ra
 );
 
 wire [31:0] npc;
@@ -57,6 +58,13 @@ assign bgez_out =
                 (RD1 >= 32'b0) ? branch :
                 npc;
 
+wire [31:0] jal_out;
+assign jal_out = j_out;
+
+wire [31:0] jr_out;
+assign jr_out = RD1;
+
+
 assign newPC = 
                 (CB == `none) ? npc :
                 (CB == `j_br) ? j_out :
@@ -66,6 +74,12 @@ assign newPC =
                 (CB == `bgtz_br) ? bgtz_out :
                 (CB == `bltz_br) ? bltz_out :
                 (CB == `bgez_br) ? bgez_out :
+                (CB == `jal_br) ? jal_out :
+                (CB == `jr_br) ? jr_out :
                 npc;
     
+assign ra = 
+            (CB == `jal_br) ? 5'd31 :
+            5'b0;
+
 endmodule
