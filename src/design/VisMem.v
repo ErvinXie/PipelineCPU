@@ -39,22 +39,33 @@ module VisMem(
     
     output[31:0] aluout_o,
     
-    output[31:0] memrd_o
+    output[31:0] memrd_o,
+
+    input[31:0] testin,
+    output[31:0] testout
 
 );
+    wire[31:0] memrd;
+
+
     assign cregwa_o = cregwa_i;
     assign cregwd_o = cregwd_i;
     assign regwe_o = regwe_i;
     assign rt_o = rt_i;
     assign rd_o = rd_i;
     assign aluout_o = aluout_i;
-
+    assign memrd_o = (aluout_i==32'h1234)?testin:memrd;
+    
+    assign testout = (memwe_i==0)?0:
+                    (aluout_i==32'h1234)?rd2_i:0;
+                
 
     assign we_me = regwe_i;
     assign wa_me = (cregwa_i==`rd)?rd_i:rt_i;
     assign wd_me = (cregwd_i==`memrd)?memrd_o:
                    (cregwd_i==`alu)?aluout_i:
                    0;
+    
 
 
     Dmem u_deme(
@@ -64,7 +75,7 @@ module VisMem(
         memlen_i,
         aluout_i,
         rd2_i,
-        memrd_o
+        memrd
     );
 
 

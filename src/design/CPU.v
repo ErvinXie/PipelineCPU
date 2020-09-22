@@ -2,7 +2,9 @@
 
 module CPU(
     input clk,
-    input rst
+    input rst,
+    input[31:0] testin,
+    output[31:0] testout
 );
     // FI
     reg[31:0] pc;
@@ -333,7 +335,10 @@ module CPU(
         rt_MEM_o,
         rd_MEM_o,
         aluout_MEM_o,
-        memrd_MEM_o
+        memrd_MEM_o,
+
+        testin,
+        testout
 
     );
 

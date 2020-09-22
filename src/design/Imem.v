@@ -12,8 +12,8 @@ module Imem(input clk,
     assign addr  = iaddr[`IMEM_ADDR_WIDTH-1:0];
     assign idata = mem[(addr>>2)];
     
-    initial begin
-        $readmemh("D:/PipelineCPU/test/imem.txt",mem);
-    end
+    // initial begin
+    //     $readmemh("D:/PipelineCPU/test/imem.txt",mem);
+    // end
     
 endmodule
