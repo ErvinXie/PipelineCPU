@@ -32,7 +32,7 @@ module RegFile(
 
 //  Pause
     assign pause = (cregwd_ex==`memrd)&&(we_ex==1)&&(
-        r1_addr == wa_ex||r2_addr == wa_ex || 31 == wa_ex
+        r1_addr == wa_ex||r2_addr == wa_ex
     );
 
 //  Forwarding

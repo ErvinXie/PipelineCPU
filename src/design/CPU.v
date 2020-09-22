@@ -36,10 +36,12 @@ module CPU(
     wire[3:0] cb_o;
 
     always@(posedge clk)begin
-        if(cb_o!=`none)
-            pc<=newPC_ID_o;
-        else
-            pc<=pc+4;
+        if(pause==0)begin
+            if(cb_o!=`none)
+                pc<=newPC_ID_o;
+            else
+                pc<=pc+4;
+        end
     end
 
     //ID
@@ -158,7 +160,7 @@ module CPU(
     ID_EX idex(
         clk,
         rst,
-        pause,
+        0,
         cregwa_ID_o,
         cregwa_EX_i,
         

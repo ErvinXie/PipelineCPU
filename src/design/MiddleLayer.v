@@ -81,7 +81,7 @@ module ID_EX(
     reg[4:0] rd;
 
     always@(posedge clk)begin
-        if(pause==0)begin
+        
             cregwa <= cregwa_i;
             cregwd <= cregwd_i;
             regwe <= regwe_i;
@@ -96,7 +96,7 @@ module ID_EX(
             rd2 <= rd2_i;
             rt <= rt_i;
             rd <= rd_i;
-        end
+        
     end
 
     always@(negedge rst)begin
