@@ -3,18 +3,19 @@
 module CPU(
     input clk,
     input rst,
-    input[31:0] testin,
-    output[31:0] testout
+    
+    output [3:0] R,
+    output [3:0] G,
+    output [3:0] B,
+    output hs,
+    output vs,
+
+    output [7:0] led
 );
     // FI
     reg[31:0] pc;
     wire pause;
     
-
-    always@(negedge rst)begin
-        pc<=0;
-    end
-
     wire[31:0] inst;
     wire[31:0] inst_o,pc_o;
     
@@ -37,8 +38,11 @@ module CPU(
     wire[31:0] newPC_ID_o;
     wire[3:0] cb_o;
 
-    always@(posedge clk)begin
-        if(pause==0)begin
+    always@(posedge clk or negedge rst)begin
+        if (!rst)begin
+            pc<=0;
+        end
+        else if(pause==0)begin
             if(cb_o!=`none)
                 pc<=newPC_ID_o;
             else
@@ -315,6 +319,7 @@ module CPU(
     VisMem u_vismem(
         clk,
         rst,
+
         cregwa_MEM_i,
         cregwd_MEM_i,
         regwe_MEM_i,
@@ -337,8 +342,13 @@ module CPU(
         aluout_MEM_o,
         memrd_MEM_o,
 
-        testin,
-        testout
+        R,
+        G,
+        B,
+        hs,
+        vs,
+
+        led
 
     );
 

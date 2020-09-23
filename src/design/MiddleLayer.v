@@ -13,16 +13,15 @@ module FI_ID(
     reg[31:0] pc;
     reg[31:0] inst;
 
-    always@(posedge clk)begin
-        if(pause==0)begin
+    always@(posedge clk or negedge rst)begin
+        if(!rst)begin
+            pc <= 0;
+            inst <= 0;
+        end
+        else if(pause==0)begin
             pc <= pc_i;
             inst <= inst_i;
         end
-    end
-
-    always@(negedge rst)begin
-        pc <= 0;
-        inst <= 0;
     end
     assign pc_o = pc;
     assign inst_o = inst;
@@ -80,8 +79,24 @@ module ID_EX(
     reg[4:0] rt;
     reg[4:0] rd;
 
-    always@(posedge clk)begin
-        
+    always@(posedge clk or negedge rst)begin
+        if(!rst)begin
+            cregwa <= 0;
+            cregwd <= 0;
+            regwe <= 0;
+            aluin1 <= 0;
+            aluin2 <= 0;
+            alusel <= 0;
+            memlen <= 0;
+            memwe <= 0;
+            imm_ext <= 0;
+            sa_ext <= 0;
+            rd1 <= 0;
+            rd2 <= 0;
+            rt <= 0;
+            rd <= 0;
+        end
+        else if(pause==0)begin
             cregwa <= cregwa_i;
             cregwd <= cregwd_i;
             regwe <= regwe_i;
@@ -96,24 +111,7 @@ module ID_EX(
             rd2 <= rd2_i;
             rt <= rt_i;
             rd <= rd_i;
-        
-    end
-
-    always@(negedge rst)begin
-        cregwa <= 0;
-        cregwd <= 0;
-        regwe <= 0;
-        aluin1 <= 0;
-        aluin2 <= 0;
-        alusel <= 0;
-        memlen <= 0;
-        memwe <= 0;
-        imm_ext <= 0;
-        sa_ext <= 0;
-        rd1 <= 0;
-        rd2 <= 0;
-        rt <= 0;
-        rd <= 0;
+        end
     end
     assign cregwa_o = cregwa & oe;
     assign cregwd_o = cregwd & oe;
@@ -168,8 +166,19 @@ module EX_MEM(
     reg[4:0] rd;
     reg[31:0] aluout;
 
-    always@(posedge clk)begin
-        if(pause==0)begin
+    always@(posedge clk or negedge rst)begin
+        if(!rst)begin
+            cregwa <= 0;
+            cregwd <= 0;
+            regwe <= 0;
+            memlen <= 0;
+            memwe <= 0;
+            rd2 <= 0;
+            rt <= 0;
+            rd <= 0;
+            aluout <= 0;
+        end
+        else if(pause==0)begin
             cregwa <= cregwa_i;
             cregwd <= cregwd_i;
             regwe <= regwe_i;
@@ -180,18 +189,6 @@ module EX_MEM(
             rd <= rd_i;
             aluout <= aluout_i;
         end
-    end
-
-    always@(negedge rst)begin
-        cregwa <= 0;
-        cregwd <= 0;
-        regwe <= 0;
-        memlen <= 0;
-        memwe <= 0;
-        rd2 <= 0;
-        rt <= 0;
-        rd <= 0;
-        aluout <= 0;
     end
     assign cregwa_o = cregwa;
     assign cregwd_o = cregwd;
@@ -235,8 +232,17 @@ module MEM_WB(
     reg[31:0] aluout;
     reg[31:0] memrd;
 
-    always@(posedge clk)begin
-        if(pause==0)begin
+    always@(posedge clk or negedge rst)begin
+        if(!rst)begin
+            cregwa <= 0;
+            cregwd <= 0;
+            regwe <= 0;
+            rt <= 0;
+            rd <= 0;
+            aluout <= 0;
+            memrd <= 0;
+        end
+        else if(pause==0)begin
             cregwa <= cregwa_i;
             cregwd <= cregwd_i;
             regwe <= regwe_i;
@@ -245,16 +251,6 @@ module MEM_WB(
             aluout <= aluout_i;
             memrd <= memrd_i;
         end
-    end
-
-    always@(negedge rst)begin
-        cregwa <= 0;
-        cregwd <= 0;
-        regwe <= 0;
-        rt <= 0;
-        rd <= 0;
-        aluout <= 0;
-        memrd <= 0;
     end
     assign cregwa_o = cregwa;
     assign cregwd_o = cregwd;

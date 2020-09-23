@@ -60,7 +60,7 @@ module RegFile(
         end
         // for register $0
         else if (we) begin
-            if (w_addr != 4'b0&&w_addr!=4'd31)begin
+            if (w_addr != 5'b0&&w_addr!=5'd31)begin
                 regs[w_addr] <= w_data;
             end
             if(ra_we)

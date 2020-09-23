@@ -6,9 +6,9 @@ module cpu_test();
 
     initial begin
         rst = 1;
-        #10;
+        #1;
         rst = 0;
-        #10
+        #9
         rst = 1;
     end
 

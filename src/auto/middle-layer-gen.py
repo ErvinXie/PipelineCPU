@@ -31,17 +31,19 @@ with open('D:\\PipelineCPU\\src\\design\\MiddleLayer.v','w+') as f:
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
                 f.write(f'    reg[{tabledata[var]["width"]-1}:0] {var};\n')
-        f.write('\n    always@(posedge clk)begin\n        if(pause==0)begin\n')
+        f.write('\n    always@(posedge clk or negedge rst)begin\n')
+        f.write('        if(!rst)begin\n')
+        for var in tabledata:
+            if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
+                f.write(f'            {var} <= 0;\n')
+        f.write('        end\n')
+        f.write('        else if(pause==0)begin\n')
+
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
                 f.write(f'            {var} <= {var}_i;\n')
         f.write('        end\n    end\n')
 
-        f.write('\n    always@(negedge rst)begin\n')
-        for var in tabledata:
-            if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:
-                f.write(f'        {var} <= 0;\n')
-        f.write('    end\n')
         
         for var in tabledata:
             if tabledata[var][stage[i]]==1 and tabledata[var][stage[i+1]]==1:

@@ -39,7 +39,13 @@ def control_line(idx,f):
 
 
 with open('D:/PipelineCPU/src/design/Marco.v','w+') as f:
-    f.write('`include "ASettings.v"\n\n')
+    f.write('`define IMEM_ADDR_WIDTH 8\n')
+    f.write('`define IMEM_SIZE 256\n')
+    f.write('`define DMEM_ADDR_WIDTH 8\n')
+    f.write('`define DMEM_SIZE 256\n')
+    f.write('`define ALU_SELECTION_WIDTH 4\n')
+    f.write('\n')
+
     inst = {'reserved':0}
     for i in range(1,tt.nrows):
         inst[tt.cell_value(i,0)+'_inst'] = i    
