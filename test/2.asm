@@ -3,15 +3,17 @@ a:
 
 .text
 main:
+	li $t3,0
 	lui $t8,0x0007
 	lui $t9,0x0008
 	#la $t8,a
 	li $s0,320
 	li $s1,240
 
-	li $s2,14
+loop1start:
+	li $s2,0
 loop1:
-	li $s3,14
+	li $s3,0
 loop2: 
 	
 	move $v0,$s2	
@@ -38,7 +40,8 @@ loop2:
 	bne $s2,$s0,loop1
 	nop
 	
-	j exit
+	addi $t3,$t3,1
+	j loop1start
 	nop
 	
 	
@@ -49,6 +52,9 @@ color:
 	andi $a1,0x00000000f
 	sll $a1,$a1,4
 	andi $a2,0x00000000f
+	
+	add $v0,$v0,$t3
+	
 	andi $v0,0x0000003ff
 	sll $v0,$v0,12
 	andi $v1,0x0000003ff

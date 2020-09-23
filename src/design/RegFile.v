@@ -65,6 +65,8 @@ module RegFile(
             end
             if(ra_we)
                 regs[31]<=br_ra_w;
+            
+            regs[30]<=regs[30]+1;
         end
     end
 endmodule
