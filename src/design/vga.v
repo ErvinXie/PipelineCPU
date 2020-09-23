@@ -14,20 +14,21 @@ module vga(
     input rst,
 
     input we,
-    input[7:0] haddr,
-    input[7:0] vaddr,
+    input[9:0] haddr,
+    input[9:0] vaddr,
     input[11:0] wdata
     );
     
-    reg[`addr_width:0] addra;
-    wire[`addr_width:0] addrb;
+    reg[`addr_width-1:0] addra;
+    wire[`addr_width-1:0] addrb;
     wire[11:0] doutb;
-    reg wea;
+    wire wea;
+    assign wea = we;
     bvram u_bvram(
         .addra(addra),
         .clka(rclk),
         .dina(wdata),
-        .ena(1'b0),
+        .ena(1'b1),
         .wea(wea),
         .addrb(addrb),
         .clkb( rclk),
@@ -53,7 +54,6 @@ module vga(
     // end 
     
     always@(posedge rclk)begin
-        wea<=we;
         addra<=vaddr*`hsize+haddr;
     end 
 

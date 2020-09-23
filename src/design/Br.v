@@ -27,7 +27,7 @@ wire [31:0] target_offset;
 assign target_offset = {
     {14{offset[15]}},offset, 2'b00
 };
-assign branch = pc + target_offset;
+assign branch = pc + 4 + target_offset;
 
 wire [31:0] beq_out;
 assign beq_out =

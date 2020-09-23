@@ -54,7 +54,7 @@ module VisMem(
     );
 
     wire vramwe = memwe_i&&(addr[31:16]==16'h0007);
-    // vaddr haddr 0 r g b
+    // vaddr[31:22] haddr[21:12]  r[11:8] g[7:4] b[3:0]
     vga u_vga(
         R,
         G,
@@ -65,8 +65,8 @@ module VisMem(
         rst,
 
         vramwe,
-        wdata[23:16],
-        wdata[31:24],
+        wdata[21:12],
+        wdata[31:22],
         wdata[11:0]
     );
 

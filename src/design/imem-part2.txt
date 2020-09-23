@@ -1,6 +1,6 @@
     end
     initial begin
-        $readmemh("D:/PipelineCPU/test/func-imem.txt",mem);
+        $readmemh("D:/PipelineCPU/test/imem.txt",mem);
     end
     
 endmodule

@@ -1,5 +1,5 @@
 
-with open('D:\\PipelineCPU\\test\\1imem.txt','r') as ins:
+with open('D:\\PipelineCPU\\test\\imem.txt','r') as ins:
     lines=ins.readlines()
 # print(lines)
 
