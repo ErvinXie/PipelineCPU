@@ -19,8 +19,8 @@ module Imem(input clk,
         mem[1]<=32'h3c190008;
         mem[2]<=32'h24100140;
         mem[3]<=32'h241100f0;
-        mem[4]<=32'h24120000;
-        mem[5]<=32'h24130000;
+        mem[4]<=32'h2412000e;
+        mem[5]<=32'h2413000e;
         mem[6]<=32'h00121021;
         mem[7]<=32'h00131821;
         mem[8]<=32'h00122021;
@@ -273,6 +273,7 @@ module Imem(input clk,
         mem[255]<=32'h00000000;
     end
     initial begin
+        #10;
         $readmemh("D:/PipelineCPU/test/imem.txt",mem);
     end
     

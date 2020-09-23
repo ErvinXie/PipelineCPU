@@ -1,5 +1,6 @@
     end
     initial begin
+        #10;
         $readmemh("D:/PipelineCPU/test/imem.txt",mem);
     end
     

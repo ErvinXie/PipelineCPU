@@ -19,7 +19,8 @@ module vga(
     input[11:0] wdata
     );
     
-    reg[`addr_width-1:0] addra;
+    wire[`addr_width-1:0] addra;
+    assign addra=vaddr*`hsize+haddr;
     wire[`addr_width-1:0] addrb;
     wire[11:0] doutb;
     wire wea;
@@ -53,9 +54,9 @@ module vga(
     //     end
     // end 
     
-    always@(posedge rclk)begin
-        addra<=vaddr*`hsize+haddr;
-    end 
+   
+        
+    
 
     wire clk;
     reg[1:0] clkcnt;

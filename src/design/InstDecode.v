@@ -75,7 +75,7 @@ module InstDecode(
 
     assign imm_ext = {16'hffff & {16{imm[15]}},imm};
     assign imm_ext_o = imm_ext;
-    assign sa_ext = {27'hfffffff & {27{sa[4]}},sa};
+    assign sa_ext = {27'h0000000 & {27{sa[4]}},sa};
 
     wire[25:0] instr_index;
     assign instr_index = inst[25:0];

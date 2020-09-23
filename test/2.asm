@@ -9,9 +9,9 @@ main:
 	li $s0,320
 	li $s1,240
 
-	li $s2,0
+	li $s2,14
 loop1:
-	li $s3,0
+	li $s3,14
 loop2: 
 	
 	move $v0,$s2	
