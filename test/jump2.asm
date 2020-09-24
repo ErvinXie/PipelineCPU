@@ -1,38 +1,33 @@
 .data
 gamestatus: .word 0
-dragonPos: .word 0,0
-ob1: .word 0,0
+
+
 sp:
 
 .text
 main:
 	la $sp,sp
 	
-
+	
 gameloop:
+	
+	
+	jal showBG
+	nop
 
-	#jal showBG
-	#nop
-
-	li $v0,40
-	li $v1,80
+	li $v0,0
+	li $v1,0
 	jal showDragon
 	nop
 	
 	srl $v0,$fp,26
-	li $v0,100
+	addi $v0,$v0,100
 	li $v1,20
 	li $a0,50
 	jal showBlock
 	nop
 	
-	
-	j gameloop
-	nop
-	
-	jal exit
-	nop
-	
+
 
 showBG:
 	sw $ra,($sp)
@@ -49,7 +44,7 @@ showBGLoop2:
 	add $v0,$s0,$0
 	add $v1,$s1,$0
 	
-	bge $s1,$s4,showBGGround
+	blt $s1,$s4,showBGGround
 	nop
 	
 	li $a0,10
@@ -74,7 +69,7 @@ showBGPixel:
 	bne $s0,$s2,showBGLoop1
 	nop
 	
-showBGEnd:
+showBlockLoopEnd:
 	subu $sp,$sp,4
 	lw $gp,($sp)
 	jr $gp
@@ -116,14 +111,6 @@ showBGLoopEnd:
 	nop
 
 #v0:x v1:y
-judgeDragon:
-	la $t1,dragonPos
-	lw $t0,($t1)
-	lw $t1,4($t1)
-
-
-#show a dragon from (x,y)to(x+20,y+40)
-#v0:x v1:y
 showDragon: 
 	sw $ra,($sp)
 	addiu $sp,$sp,4
@@ -131,27 +118,23 @@ showDragon:
 	move $t0,$v0
 	move $t1,$v1
 	
+	
 showDragonLoopStart:
+	
 	li $s2,20
 	li $s3,40
-	
 	li $s0,0
 showDragonLoop1:
 	li $s1,0
 showDragonLoop2:
-	addu $v0,$s0,$t0 # x pixel
-	addu $v1,$s1,$t1 # y pixel
-	
-	li $a0,0
-	li $a1,0
+	add $v0,$s0,40
+	add $v1,$s1,80
 	li $a2,15
 	jal show
 	nop
-	
 	addi $s1,$s1,1
 	bne $s1,$s3,showDragonLoop2
 	nop
-	
 	addi $s0,$s0,1
 	bne $s0,$s2,showDragonLoop1
 	nop
