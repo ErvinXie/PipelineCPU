@@ -49,7 +49,7 @@ with open('D:\\PipelineCPU\\src\\design\\dmem-part1.txt','r') as p1:
 with open('D:\\PipelineCPU\\src\\design\\dmem-part2.txt','r') as p2:
     l2 = p2.readlines()
 
-dmemsize = 1024
+dmemsize = 256
 instmax = dmemsize
 print(f'{lines.__len__()} Data, {instmax} max')
 

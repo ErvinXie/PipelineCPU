@@ -2,6 +2,7 @@
 `define IMEM_SIZE 1024
 `define DMEM_ADDR_WIDTH 8
 `define DMEM_SIZE 256
+
 `define ALU_SELECTION_WIDTH 4
 
 //Instructions 

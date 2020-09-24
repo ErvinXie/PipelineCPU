@@ -61,17 +61,20 @@ module RegFile(
             mscnt<=0;
         end
         // for register $0
-        else if (we) begin
-            if (w_addr != 5'b0&&w_addr!=5'd31)begin
-                regs[w_addr] <= w_data;
-            end
-            if(ra_we)
-                regs[31]<=br_ra_w;
+        else begin
+            mscnt<=mscnt+1;    
+            if (we) begin
+                if (w_addr != 5'b0&&w_addr!=5'd31)begin
+                    regs[w_addr] <= w_data;
+                end
+                if(ra_we)
+                    regs[31]<=br_ra_w;
             
-            mscnt<=mscnt+1;
-            if(mscnt==0)
-                regs[30]<=regs[30]+1;
+            
+                if(mscnt==0)
+                    regs[30]<=regs[30]+1;
 
+        end
         end
     end
 endmodule
