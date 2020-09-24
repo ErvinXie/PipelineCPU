@@ -1,0 +1,24 @@
+ end
+        else if (we)begin
+            if(memlen==`sb_me)begin
+                mem[addr] <= wdata[7:0];
+            end
+                
+            if(memlen==`sh_me)begin
+                mem[addr] <= wdata[7:0];
+                mem[addr+1] <= wdata[15:8];
+            end
+            if(memlen==`sw_me)begin
+                mem[addr] <= wdata[7:0];
+                mem[addr+1] <= wdata[15:8];
+                mem[addr+2] <= wdata[23:16];
+                mem[addr+3] <= wdata[31:24];
+            end
+        end
+    end
+    initial begin
+         $readmemh("D:/PipelineCPU/test/dmem.txt",mem);
+    end
+    
+    
+endmodule
