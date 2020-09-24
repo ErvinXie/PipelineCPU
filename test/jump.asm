@@ -1,5 +1,8 @@
 .data
 gamestatus: .word 0
+block1: .word 100,100,40,20,13,10,5
+block2: .word 150,150 50,25,12,3,14
+
 sp:
 
 .text
@@ -9,16 +12,13 @@ main:
 	lui $t0,0x0008
 	li $t1,1
 	sw $t1,($t0)
+	
 gameloop:
 
 	#jal showBG
 	#nop
 
-	
-	 li $v0,100
-	 li $v1,100
-	 li $a0,50
-	 li $a1,25
+	 la $t0,block1
 	 jal showBlock
 	 nop
 	 
@@ -26,10 +26,7 @@ gameloop:
 	 li $t1,16
 	 sw $t1,($t0)
 	
-	 li $v0,200
-	 li $v1,200
-	 li $a0,50
-	 li $a1,30
+	 la $t0,block2
 	 jal showBlock
 	 nop
 	
@@ -38,13 +35,7 @@ gameloop:
 	li $t1,8
 	sw $t1,($t0)
 	
-	#srl $v0,$fp,27
-	#addi $v0,$v0,100
-	#li $v1,20
-	#li $a0,50
-	#li $a1,25
-	#jal showBlock
-	#nop
+
 	j gameloop
 	nop
 	
@@ -54,8 +45,14 @@ gameloop:
 
 #v0:x v1:y a0:xlen a1:ylen
 showBlock:
+
 	sw $ra,($sp)
 	addiu $sp,$sp,4
+	
+	 lw $v0,($t0)
+	 lw $v1,4($t0)
+	 lw $a0,8($t0)
+	 lw $a1,12($t0)
 
 showBlockLoopStart:
 	
@@ -73,8 +70,11 @@ showBlockLoop2:
 
 	move $v0,$s0
 	move $v1,$s1
-
-	li $a0,15 #color
+	
+	 lw $a0,16($t0)
+	 lw $a1,20($t0)
+	 lw $a2,24($t0)
+	
 	
 	jal show
 	nop
