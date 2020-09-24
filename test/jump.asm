@@ -20,7 +20,7 @@ gameloop:
 	nop
 	
 	srl $v0,$fp,26
-	li $v0,100
+	addi $v0,$v0,100
 	li $v1,20
 	li $a0,50
 	jal showBlock
@@ -128,6 +128,9 @@ showDragon:
 	sw $ra,($sp)
 	addiu $sp,$sp,4
 	
+	#la $t1,dragonPos
+	#lw $t0,($t1)
+	#lw $t1,4($t1)
 	move $t0,$v0
 	move $t1,$v1
 	
@@ -159,6 +162,7 @@ showDragonLoopEnd:
 	subu $sp,$sp,4
 	lw $gp,($sp)
 	jr $gp
+	nop
 	
 
 # a0:r, a1:g a2:b  v0:x v1:y
