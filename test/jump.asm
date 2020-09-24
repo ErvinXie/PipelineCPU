@@ -8,23 +8,30 @@ sp:
 main:
 	la $sp,sp
 	
+
 	
 gameloop:
 
-	jal showBG
-	nop
+	#jal showBG
+	#nop
 
-	li $v0,0
-	li $v1,0
-	jal showDragon
-	nop
 	
-	srl $v0,$fp,26
-	addi $v0,$v0,100
-	li $v1,20
+	
+	li $v0,100
+	li $v1,100
 	li $a0,50
+	li $a1,25
 	jal showBlock
 	nop
+	
+	
+	#srl $v0,$fp,27
+	#addi $v0,$v0,100
+	#li $v1,20
+	#li $a0,50
+	#li $a1,25
+	#jal showBlock
+	#nop
 	
 	
 	
@@ -45,6 +52,7 @@ showBGLoopStart:
  	li $s2,320 # xlen
  	li $s3,240 # ylen
  	srl $s4,$s3,1
+ 	
  	li $s0,0
 showBGLoop1:
  	li $s1,0
@@ -85,32 +93,39 @@ showBGEnd:
 
 
 
-#v0:x v1:ylen a0:xlen
+#v0:x v1:y a0:xlen a1:ylen
 showBlock:
 	sw $ra,($sp)
 	addiu $sp,$sp,4
 
 showBlockLoopStart:
 	
-	move $s2,$a0 # xlen
-	move $s3,$v1 # ylen
-	addi $t0,$v0,40 #x start
-	li $t1,120 #y start
-	sub $t1,$t1,$v1
-	li $s0,0
+	add $s2,$a0,$v0 # x end
+	add $s3,$a1,$v1 # y end
+	
+	move $s0,$v0 #x start
+	move $t1,$v1 #x start
+
+
 showBlockLoop1:
-	li $s1,0
+	move $s1,$t1
 showBlockLoop2:
-	add $v0,$s0,$t0 #pixel x
-	add $v1,$s1,$t1 #pixel y
+	
+	#li $v0,100
+	move $v0,$s0
+	move $v1,$s1
+	#addi $v0,$s0,100 #pixel x
+	#addi $v1,$s1,100 #pixel y
+
 	li $a0,15 #color
 	
 	jal show
-	
 	nop
+	
 	addi $s1,$s1,1
 	bne $s1,$s3,showBlockLoop2
 	nop
+	
 	addi $s0,$s0,1
 	bne $s0,$s2,showBlockLoop1
 	nop
@@ -120,38 +135,7 @@ showBlockLoopEnd:
 	jr $gp
 	nop
 
-#v0:x v1:y
-showDragon: 
-	sw $ra,($sp)
-	addiu $sp,$sp,4
-	
-	move $t0,$v0
-	move $t1,$v1
-	
-showDragonLoopStart:
-	
-	li $s2,20
-	li $s3,40
-	li $s0,0
-showDragonLoop1:
-	li $s1,0
-showDragonLoop2:
-	add $v0,$s0,40
-	add $v1,$s1,80
-	li $a2,15
-	jal show
-	nop
-	addi $s1,$s1,1
-	bne $s1,$s3,showDragonLoop2
-	nop
-	addi $s0,$s0,1
-	bne $s0,$s2,showDragonLoop1
-	nop
-showDragonLoopEnd:
-	subu $sp,$sp,4
-	lw $gp,($sp)
-	jr $gp
-	nop
+
 
 # a0:r, a1:g a2:b  v0:x v1:y
 show:	
