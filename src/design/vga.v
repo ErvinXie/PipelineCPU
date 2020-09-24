@@ -24,7 +24,7 @@ module vga(
     wire[`addr_width-1:0] addrb;
     wire[11:0] doutb;
     wire wea;
-    assign wea = we;
+    assign wea = we&&(vaddr<`vsize)&&(haddr<`hsize);
     bvram u_bvram(
         .addra(addra),
         .clka(rclk),

@@ -11,12 +11,15 @@ main:
 	
 gameloop:
 
+	jal showBG
+	nop
+
 	li $v0,0
 	li $v1,0
 	jal showDragon
 	nop
 	
-	srl $v0,$fp,25
+	srl $v0,$fp,26
 	addi $v0,$v0,100
 	li $v1,20
 	li $a0,50
@@ -34,7 +37,51 @@ gameloop:
 	nop
 	
 
+showBG:
+	sw $ra,($sp)
+	addiu $sp,$sp,4
 
+showBGLoopStart:
+ 	li $s2,320 # xlen
+ 	li $s3,240 # ylen
+ 	srl $s4,$s3,1
+ 	li $s0,0
+showBGLoop1:
+ 	li $s1,0
+showBGLoop2:
+ 	add $v0,$s0,$0
+ 	add $v1,$s1,$0
+ 
+ 	bge $s1,$s4,showBGGround
+ 	nop
+ 
+ 	li $a0,10
+ 	li $a1,11
+ 	li $a2,13
+ 	j showBGPixel
+ 	nop
+showBGGround:
+ 	li $a2,7
+ 	li $a1,5
+ 	li $a0,5 #color
+ 
+showBGPixel:
+ 	jal show
+ 	nop
+ 
+ 	addi $s1,$s1,1
+ 	bne $s1,$s3,showBGLoop2
+ 	nop
+ 
+ 	addi $s0,$s0,1
+ 	bne $s0,$s2,showBGLoop1
+ 	nop
+ 
+showBGEnd:
+ 	subu $sp,$sp,4
+ 	lw $gp,($sp)
+ 	jr $gp
+ 	nop
 
 
 
@@ -71,6 +118,7 @@ showBlockLoopEnd:
 	subu $sp,$sp,4
 	lw $gp,($sp)
 	jr $gp
+	nop
 
 #v0:x v1:y
 showDragon: 
@@ -103,7 +151,7 @@ showDragonLoopEnd:
 	subu $sp,$sp,4
 	lw $gp,($sp)
 	jr $gp
-	
+	nop
 
 # a0:r, a1:g a2:b  v0:x v1:y
 show:	
