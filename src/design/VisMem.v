@@ -75,7 +75,7 @@ module VisMem(
         if(!rst)begin
             led<=8'b0;
         end 
-        else if(addr[31:16]==16'h0008)begin
+        else if(addr[31:16]==16'h0008&&memwe_i)begin
             led<=wdata[7:0];
         end
     end
