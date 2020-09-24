@@ -53,10 +53,12 @@ module RegFile(
 
 
     integer i = 0;
+    reg[19:0] mscnt;
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             for(i = 0;i < 32;i = i+1)
                 regs[i] <= 32'b0;
+            mscnt<=0;
         end
         // for register $0
         else if (we) begin
@@ -66,7 +68,10 @@ module RegFile(
             if(ra_we)
                 regs[31]<=br_ra_w;
             
-            regs[30]<=regs[30]+1;
+            mscnt<=mscnt+1;
+            if(mscnt==0)
+                regs[30]<=regs[30]+1;
+
         end
     end
 endmodule

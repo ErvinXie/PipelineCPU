@@ -37,26 +37,8 @@ module vga(
         .enb(1'b1)
     );
 
-    // integer i=0;
-    // integer j=0;
-    // reg[10:0] qo,re;
-    // always @(negedge rst) begin
-    //     for(i=0;i<`totalsize;i=i+1)begin
-    //         qo = i/`hsize;
-    //         re = i%`hsize;
-    //         vram[i] = {qo[3:0],re[3:0],~qo[3:0]};
-    //     end
-    // end
     
-    // always@(posedge rclk)begin
-    //     if(we)begin
-    //         vram[vaddr*`hsize+haddr] <= wdata;
-    //     end
-    // end 
-    
-   
-        
-    
+
 
     wire clk;
     reg[1:0] clkcnt;
